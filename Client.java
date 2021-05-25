@@ -1,7 +1,4 @@
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.*;
-import javax.swing.text.html.HTMLDocument;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
@@ -34,58 +31,8 @@ public class Client extends JFrame {
         final File[] fileToSend = new File[1];
 
         // Create a socket connection to connect with the server.
-        // Socket socket = new Socket("localhost", 1234);
         System.out.println("This is client");
         new Client();
-
-
-
-/*
-        JFrame jFrame = new JFrame("File Sender1 (Client Side)");
-        jFrame.setSize(450,450);
-        jFrame.setLayout(new BoxLayout(jFrame.getContentPane(),BoxLayout.Y_AXIS));
-        jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);*/
-/*
-        JLabel jlTitle = new JLabel("File Sender2 (Client Side)");
-        // Change the font family, size, and style.
-        jlTitle.setFont(new Font("Arial", Font.BOLD, 25));
-        // Add a border around the label for spacing.
-        jlTitle.setBorder(new EmptyBorder(20,0,10,0));
-        // Make it so the title is centered horizontally.
-        jlTitle.setAlignmentX(Component.CENTER_ALIGNMENT);*/
-
-    /*    // Label that has the file name.
-        JLabel jlFileName = new JLabel("Choose a file to send.");
-        // Change the font.
-        jlFileName.setFont(new Font("Arial", Font.BOLD, 20));
-        // Make a border for spacing.
-        jlFileName.setBorder(new EmptyBorder(50, 0, 0, 0));
-        // Center the label on the x axis (horizontally).
-        jlFileName.setAlignmentX(Component.CENTER_ALIGNMENT);*/
-
-        // Panel that contains the buttons.
-/*        JPanel jpButton = new JPanel();
-        // Border for panel that houses buttons.
-        jpButton.setBorder(new EmptyBorder(75, 10, 10, 0));*/
-        // Create send file button.
-    /*    JButton jbSendFile = new JButton("Send1");
-        // Set preferred size works for layout containers.
-        jbSendFile.setPreferredSize(new Dimension(150, 75));
-        // Change the font style, type, and size for the button.
-        jbSendFile.setFont(new Font("Arial", Font.BOLD, 20));
-        // Make the second button to choose a file.*/
-      /*  JButton jbChooseFile = new JButton("Choose File");
-        // Set the size which must be preferred size for within a container.
-        jbChooseFile.setPreferredSize(new Dimension(150, 75));
-        // Set the font for the button.
-        jbChooseFile.setFont(new Font("Arial", Font.BOLD, 20));
-
-        // Add the buttons to the panel.
-       // jpButton.add(jbSendFile);
-        jpButton.add(jbChooseFile);*/
-
-        // Button action for choosing the file.
-        // This is an inner class so we need the fileToSend to be final.
 
         chooseBtn.addActionListener(new ActionListener() {
             @Override
@@ -144,11 +91,6 @@ public class Client extends JFrame {
             }
         });
 
-        // Add everything to the frame and make it visible.
-   /*     jFrame.add(jlTitle);
-       // jFrame.add(fileLabel);
-        jFrame.add(jpButton);
-        jFrame.setVisible(true);*/
     }
 
 
@@ -161,7 +103,6 @@ public class Client extends JFrame {
             System.out.println("Connection Success");
             br = new BufferedReader(new InputStreamReader(socketChat.getInputStream()));
             out = new PrintWriter(socketChat.getOutputStream());
-
             createGUI("Client Messenger Tab", 400, 600, 170, 116);
             setIcon("back", "3.png", 40, 40, 5, 15, 30, 30, true);
             setIcon("profile", "clientProfile.png", 45, 45, 40, 1, 60, 60, true);
@@ -172,22 +113,13 @@ public class Client extends JFrame {
             setLabel("Active Now", false, 14, 110, 35, 100, 20);
             handleEvents();
             startReading();
-
         } catch (Exception e) {
-
         }
-
-
-
-
         setLayout(null);
         setSize(420, 670);
         setLocation(250, 80);
         setResizable(false);
         setVisible(true);
-
-
-
     }
 
     private void setLabel(String labelText, Boolean styleBold, int labelSize, int lBoundX, int lBoundY, int lBoundWidth, int lBoundHeight) {
@@ -233,7 +165,6 @@ public class Client extends JFrame {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                 aboutSection();
-
                 }
             });
         }
@@ -296,21 +227,6 @@ public class Client extends JFrame {
         fileLabel.setFont(new Font("SAN_SERIF", Font.BOLD, 12));
         add(fileLabel);
 
-        // coding for component
-  /*      heading =new JLabel();
-        heading.setFont(font);
-        heading.setIcon(new ImageIcon("logo.png"));
-        heading.setHorizontalTextPosition(SwingConstants.CENTER);
-        heading.setVerticalTextPosition(SwingConstants.BOTTOM);
-        heading.setVerticalAlignment(SwingConstants.CENTER);
-
-        heading.setHorizontalAlignment(SwingConstants.CENTER);
-        heading.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));*/
-
-
-        // Setting Frame Layout
-
-
         this.setLayout(new BorderLayout());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
@@ -357,13 +273,6 @@ public class Client extends JFrame {
             try {
                 while (true) {
                     String msg = br.readLine();
-                  /*   if (msg.equals("exit")) {
-                        System.out.println("Server terminated the chat.");
-                        JOptionPane.showMessageDialog(this, "Server terminated the chat.");
-                        messageInput.setEnabled(false);
-                        socket.close();
-                        break;
-                    } */
                     messageArea.append("Server : " + msg + "\n");
                     messageArea.setCaretPosition(messageArea.getDocument().getLength());
                 }

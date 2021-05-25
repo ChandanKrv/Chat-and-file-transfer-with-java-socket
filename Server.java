@@ -1,4 +1,3 @@
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -11,10 +10,9 @@ import java.util.ArrayList;
  * Created by Chandan on May 23, 2021.
  */
 public class Server extends JFrame {
-    // Array list to hold information about the files received.
     static ArrayList<MyFile> myFiles = new ArrayList<>();
     private static ServerSocket serverSocketFile, serverSocketChat;
-    private static Socket socketFile, socketChat;
+    private static Socket socketFile;
 
     //Global Variables
     private JPanel headerPanel;
@@ -26,48 +24,15 @@ public class Server extends JFrame {
     private static JButton chooseBtn;
     BufferedReader br;
     PrintWriter out;
-    private Font font = new Font("Roboto", Font.PLAIN, 20);
 
     private static JFrame jFrame;
     private static JPanel jPanel;
 
     public static void main(String[] args) throws IOException {
-        //final File[] fileToSend = new File[1];
-        // Used to track the file (jpanel that has the file name in it on a label).
         int fileId = 0;
         System.out.println("This is server going to start server: ");
         new Server();
         fileDownloader();
-
-/*
-        chooseBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Create a file chooser to open the dialog to choose a file.
-                JFileChooser jFileChooser = new JFileChooser();
-                // Set the title of the dialog.
-                jFileChooser.setDialogTitle("Choose a file to send.");
-                // Show the dialog and if a file is chosen from the file chooser execute the following statements.
-                if (jFileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-                    // Get the selected file.
-                    fileToSend[0] = jFileChooser.getSelectedFile();
-                    // Change the text of the java swing label to have the file name.
-                    fileLabel.setText(fileToSend[0].getName());
-                }
-            }
-        });
-
-*/
-
-        // Sends the file when the button is clicked.
-     /*   sendBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });*/
-        // Create a server socket that the server will be listening with.
-        // ServerSocket serverSocket = new ServerSocket(1234);
 
         // This while loop will run forever so the server will never stop unless the application is closed.
         while (true) {
@@ -143,7 +108,7 @@ public class Server extends JFrame {
             serverSocketChat = new ServerSocket(8888);
             serverSocketFile = new ServerSocket(8889);
             System.out.println("Server is ready to accept connection");
-            System.out.println("Waiting.... ");
+            System.out.println("Waiting for client.... ");
             Socket socketText = serverSocketChat.accept();
             br = new BufferedReader(new InputStreamReader(socketText.getInputStream()));
             out = new PrintWriter(socketText.getOutputStream());
@@ -180,9 +145,7 @@ public class Server extends JFrame {
 
     }
 
-    /**
-     * Created by Chandan on May 24, 2021.
-     */
+
     public static void fileDownloader() {
         // Main container, set the name.
         jFrame = new JFrame();
@@ -355,20 +318,6 @@ public class Server extends JFrame {
         fileLabel.setFont(new Font("SAN_SERIF", Font.BOLD, 12));
         // add(fileLabel);
 
-        // coding for component
-  /*      heading =new JLabel();
-        heading.setFont(font);
-        heading.setIcon(new ImageIcon("logo.png"));
-        heading.setHorizontalTextPosition(SwingConstants.CENTER);
-        heading.setVerticalTextPosition(SwingConstants.BOTTOM);
-        heading.setVerticalAlignment(SwingConstants.CENTER);
-
-        heading.setHorizontalAlignment(SwingConstants.CENTER);
-        heading.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));*/
-
-
-        // Setting Frame Layout
-
 
         this.setLayout(new BorderLayout());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -393,11 +342,6 @@ public class Server extends JFrame {
             try {
                 while (true) {
                     String msg = br.readLine();
-                    /*
-                     * if (msg.equals("exit")) { System.out.println("Client terminated the chat.");
-                     * JOptionPane.showMessageDialog(this, "Client terminated the chat.");
-                     * messageInput.setEnabled(false); socket.close(); break; }
-                     */
                     messageArea.append("Client : " + msg + "\n");
                     messageArea.setCaretPosition(messageArea.getDocument().getLength());
                 }
@@ -457,8 +401,6 @@ public class Server extends JFrame {
     /**
      * When the jpanel is clicked a popup shows to say whether the user wants to download
      * the selected document.
-     *
-     * @return A mouselistener that is used by the jpanel.
      */
     public static MouseListener getMyMouseListener() {
         return new MouseListener() {

@@ -8,7 +8,7 @@ import java.io.*;
 import java.net.*;
 
 /**
- * Created by Chandan on May 18, 2021.
+ * Created by Chandan on May 23, 2021.
  */
 
 
@@ -164,7 +164,7 @@ public class Client extends JFrame {
 
             createGUI("Client Messenger Tab", 400, 600, 170, 116);
             setIcon("back", "3.png", 40, 40, 5, 15, 30, 30, true);
-            setIcon("profile", "1.png", 45, 45, 40, 1, 60, 60, true);
+            setIcon("profile", "clientProfile.png", 45, 45, 40, 1, 60, 60, true);
             setIcon("video", "video.png", 35, 35, 270, 20, 26, 25, true);
             setIcon("audio", "phone.png", 35, 35, 320, 20, 26, 25, true);
             setIcon("dots", "3icon.png", 13, 25, 370, 20, 13, 25, true);
@@ -228,18 +228,14 @@ public class Client extends JFrame {
                 }
             });
         }
-        if (target.equals("send")) {
-            JButton button = new JButton();
-            try {
-                Image img = ImageIO.read(getClass().getResource(iconPath + iName));
-                button.setIcon(new ImageIcon(img));
-            } catch (Exception ex) {
-                System.out.println(ex);
-            }
+        if (target.equals("dots")) {
+            l1.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                aboutSection();
 
-        }
-        if (target.equals("sendFile")) {
-
+                }
+            });
         }
     }
 
@@ -319,7 +315,15 @@ public class Client extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
     }
-
+    private void aboutSection() {
+        JOptionPane.showMessageDialog(Client.this, "This software is designed and developed by Chandan \n and group, under guidance of Ananya Banerjee ma'am\n\n" +
+                "College: Narula Institute of Technology\n" +
+                "Stream: Computer Science Engineering\n" +
+                "Subject: Computer Network Lab\n" +
+                "Language: Java (Swing, AWT)\n" +
+                "Year/Sem: 3rd/6th\n" +
+                "Date: 25/05/2021");
+    }
     private void handleEvents() {
         messageInput.addKeyListener(new CustomKeyListener());
     }

@@ -8,7 +8,7 @@ import java.net.*;
 import java.util.ArrayList;
 
 /**
- * Created by Chandan on May 18, 2021.
+ * Created by Chandan on May 24, 2021.
  */
 public class Server extends JFrame {
     // Array list to hold information about the files received.
@@ -20,7 +20,7 @@ public class Server extends JFrame {
     private JPanel headerPanel;
     final String iconPath = "icons/";
     private JTextArea messageArea;
-    private JTextField messageInput;
+    private static JTextField messageInput;
     private static JButton sendBtn;
     private static JLabel fileLabel;
     private static JButton chooseBtn;
@@ -57,43 +57,13 @@ public class Server extends JFrame {
             }
         });
 
+*/
 
         // Sends the file when the button is clicked.
-        sendBtn.addActionListener(new ActionListener() {
+     /*   sendBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // If a file has not yet been selected then display this message.
-                if (fileToSend[0] == null) {
-                    fileLabel.setText("NO File Selected");
-                    fileLabel.setForeground(new Color(255, 0, 0));
-                    // If a file has been selected then do the following.
-                } else {
-                    try {
-                        // Create an input stream into the file you want to send.
-                        FileInputStream fileInputStream = new FileInputStream(fileToSend[0].getAbsolutePath());
 
-                        // Create an output stream to write to write to the server over the socket connection.
-                        DataOutputStream dataOutputStream = new DataOutputStream(socketFile.getOutputStream());
-                        // Get the name of the file you want to send and store it in filename.
-                        String fileName = fileToSend[0].getName();
-                        // Convert the name of the file into an array of bytes to be sent to the server.
-                        byte[] fileNameBytes = fileName.getBytes();
-                        // Create a byte array the size of the file so don't send too little or too much data to the server.
-                        byte[] fileBytes = new byte[(int) fileToSend[0].length()];
-                        // Put the contents of the file into the array of bytes to be sent so these bytes can be sent to the server.
-                        fileInputStream.read(fileBytes);
-                        // Send the length of the name of the file so server knows when to stop reading.
-                        dataOutputStream.writeInt(fileNameBytes.length);
-                        // Send the file name.
-                        dataOutputStream.write(fileNameBytes);
-                        // Send the length of the byte array so the server knows when to stop reading.
-                        dataOutputStream.writeInt(fileBytes.length);
-                        // Send the actual file.
-                        dataOutputStream.write(fileBytes);
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
-                }
             }
         });*/
         // Create a server socket that the server will be listening with.
@@ -180,12 +150,15 @@ public class Server extends JFrame {
 
             createGUI("Server Messenger Tab", 400, 600, 170, 116);
             setIcon("back", "3.png", 40, 40, 5, 15, 30, 30, true);
-            setIcon("profile", "1.png", 45, 45, 40, 1, 60, 60, true);
+            setIcon("profile", "serverProfile.png", 45, 45, 40, 1, 60, 60, true);
             setIcon("video", "video.png", 35, 35, 270, 20, 26, 25, true);
             setIcon("audio", "phone.png", 35, 35, 320, 20, 26, 25, true);
             setIcon("dots", "3icon.png", 13, 25, 370, 20, 13, 25, true);
             setLabel("Server (Admin)", true, 18, 110, 15, 200, 18);
             setLabel("Active Now", false, 14, 110, 35, 100, 20);
+
+            setIcon("smile", "smile.png", 35, 35, 300, 578, 40, 40, false);
+            setIcon("like", "like.png", 35, 35, 344, 576, 40, 40, false);
 
             handleEvents();
 
@@ -207,6 +180,9 @@ public class Server extends JFrame {
 
     }
 
+    /**
+     * Created by Chandan on May 24, 2021.
+     */
     public static void fileDownloader() {
         // Main container, set the name.
         jFrame = new JFrame();
@@ -235,10 +211,24 @@ public class Server extends JFrame {
         jlTitle.setBorder(new EmptyBorder(20, 0, 10, 0));
         // Center the title horizontally in the middle of the frame.
         jlTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
-
         // Add everything to the main GUI.
         jFrame.add(jlTitle);
+
+        // Title above panel.
+        JLabel jlTitle2 = new JLabel("Click on the file to view or download");
+        // Change the font of the title.
+        jlTitle2.setFont(new Font("Arial", Font.BOLD, 15));
+        // Add a border around the title for spacing.
+        jlTitle2.setBorder(new EmptyBorder(5, 0, 10, 0));
+        // Center the title horizontally in the middle of the frame.
+        jlTitle2.setAlignmentX(Component.CENTER_ALIGNMENT);
+        // Add everything to the main GUI.
+        jFrame.add(jlTitle2);
+
+
         jFrame.add(jScrollPane);
+
+
         // Make the GUI show up.
         jFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
         jFrame.setVisible(true);
@@ -288,12 +278,27 @@ public class Server extends JFrame {
             l1.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                   // super.mouseClicked(e);
-                    fileDownloader();
+                    aboutSection();
                 }
             });
         }
 
+        if (target.equals("smile")) {
+            l1.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    messageInput.setText("\uD83D\uDE0A");
+                }
+            });
+        }
+        if (target.equals("like")) {
+            l1.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    messageInput.setText("\uD83D\uDC4D");
+                }
+            });
+        }
     }
 
 
@@ -326,7 +331,7 @@ public class Server extends JFrame {
 
 
         messageInput = new JTextField();
-        messageInput.setBounds(6, 578, 240, 45);
+        messageInput.setBounds(6, 578, 290, 45);
         messageInput.setFont(new Font("SAN_SERIF", Font.PLAIN, 16));
         //messageInput.setHorizontalAlignment(SwingConstants.CENTER); //Center Typing
         this.add(messageInput, BorderLayout.SOUTH);
@@ -338,20 +343,20 @@ public class Server extends JFrame {
         chooseBtn.setBounds(250, 590, 75, 30);
         chooseBtn.setForeground(new Color(3, 95, 84));
         chooseBtn.setFont(new Font("SAN_SERIF", Font.BOLD, 13));
-        add(chooseBtn);
+        //  add(chooseBtn);
 
 
-        sendBtn = new JButton("Send");
-        sendBtn.setBounds(330, 590, 70, 30);
+        sendBtn = new JButton("\uD83D\uDE0A");
+        sendBtn.setBounds(300, 586, 100, 30);
         sendBtn.setForeground(new Color(3, 95, 84));
         sendBtn.setFont(new Font("SAN_SERIF", Font.BOLD, 13));
-        add(sendBtn);
+        // add(sendBtn);
 
-        fileLabel = new JLabel("No file selected");
+        fileLabel = new JLabel("Press enter to send text");
         fileLabel.setBounds(255, 560, 140, 30);
-        fileLabel.setForeground(new Color(3, 95, 84));
+        fileLabel.setForeground(new Color(86, 102, 102));
         fileLabel.setFont(new Font("SAN_SERIF", Font.BOLD, 12));
-        add(fileLabel);
+        // add(fileLabel);
 
         // coding for component
   /*      heading =new JLabel();
@@ -373,6 +378,15 @@ public class Server extends JFrame {
         this.setVisible(true);
     }
 
+    private void aboutSection() {
+        JOptionPane.showMessageDialog(Server.this, "This software is designed and developed by Chandan \n and group, under guidance of Ananya Banerjee ma'am\n\n" +
+                "College: Narula Institute of Technology\n" +
+                "Stream: Computer Science Engineering\n" +
+                "Subject: Computer Network Lab\n" +
+                "Language: Java (Swing, AWT)\n" +
+                "Year/Sem: 3rd/6th\n" +
+                "Date: 25/05/2021");
+    }
 
     public void startReading() {
         // This thread will continuously read the client's data

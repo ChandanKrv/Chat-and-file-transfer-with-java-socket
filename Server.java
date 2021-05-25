@@ -8,7 +8,7 @@ import java.net.*;
 import java.util.ArrayList;
 
 /**
- * Created by Chandan on May 24, 2021.
+ * Created by Chandan on May 23, 2021.
  */
 public class Server extends JFrame {
     // Array list to hold information about the files received.
@@ -323,11 +323,8 @@ public class Server extends JFrame {
         messageArea.setFont(new Font("SEN_SERIF", Font.PLAIN, 18));
         messageArea.setLineWrap(true);
         messageArea.setWrapStyleWord(true);
-        //messageArea.setBackground(Color.BLACK);
-        JScrollPane jScrollPane = new JScrollPane(messageArea);
-        // this.add(messageArea, BorderLayout.NORTH);
-        this.add(jScrollPane, BorderLayout.CENTER);
         add(messageArea);
+
 
 
         messageInput = new JTextField();
